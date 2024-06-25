@@ -4,7 +4,9 @@ import { Image, Deck, DefaultTemplate, Slide, FlexBox, Heading, Text, SpectacleT
 
 import "./index.css";
 import inputOutput from "./input_output.png";
-import { AudioGraphExample } from './src/AudioGraphExample';
+import { AudioGraphExample } from './src/WebAudioIntoSlide/AudioGraphExample';
+import { TB303 } from './src/TB303';
+import { DNB } from './src/DNB';
 
 const theme: SpectacleThemeOverrides = {
   colors: {
@@ -53,6 +55,14 @@ const Presentation = () => (
         The API provides a system for controlling audio on the Web. It's designed around modular routing of audio nodes, combined into a graph.
       </Text>
       <AudioGraphExample />
+    </Slide>
+    <Slide>
+      <Heading fontSize="h2">TB303</Heading>
+      <TB303 />
+    </Slide>
+    <Slide>
+      <Heading fontSize="h2">Slices</Heading>
+      <DNB />
     </Slide>
   </Deck>
 );

@@ -2,9 +2,9 @@ import React, { useEffect } from 'react';
 import ReactFlow, { Node, Position, useNodesState, useEdgesState, Edge } from 'reactflow';
 
 import 'reactflow/dist/style.css';
-import { useSlide } from './useSlide';
+import { useSlide } from '../useSlide';
 import SliderNode from './SliderNode';
-import { impulse } from './impulse';
+import { impulse } from '../audio/impulse';
 import StandardNode from './StandardNode';
 import OutputNode from './OutputNode';
 
