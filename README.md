@@ -1,4 +1,4 @@
-# creative
+# creative coding talk
 
 Made with ❤️ and [Spectacle](https://github.com/FormidableLabs/spectacle/).
 
