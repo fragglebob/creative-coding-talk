@@ -30,10 +30,8 @@ export function use2DCanvas<TState>(setup: (ctx: CanvasRenderingContext2D) => TS
             return;
         }
 
-        const rect = parent?.getBoundingClientRect();
-
-        canvas.width = Math.floor(rect.width) * 2;
-        canvas.height = Math.floor(rect.height) * 2;
+        canvas.width = Math.floor(parent.clientWidth) * 2;
+        canvas.height = Math.floor(parent.clientHeight) * 2;
     
         const state = setup(ctx);
 
