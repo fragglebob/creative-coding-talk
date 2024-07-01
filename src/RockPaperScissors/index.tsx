@@ -1,73 +1,21 @@
-import React, {FC, useRef, RefObject, useEffect} from "react";
-import { useSlide } from "../useSlide";
-
-function use2DCanvas<TState>(setup: (ctx: CanvasRenderingContext2D) => TState, draw: (ctx: CanvasRenderingContext2D, state: TState) => void) {
-    const canvasRef = useRef<HTMLCanvasElement>(null);
-
-    const { isSlideActive } = useSlide();
-
-    useEffect(() => {
-
-        if(!isSlideActive) {
-            return;
-        }
-
-        const canvas = canvasRef.current;
-
-        if(!canvas) {
-            return;
-        }
-
-        const ctx = canvas.getContext("2d");
-
-        if(!ctx) {
-            return;
-        }
-
-        const parent = canvas.parentElement;
-
-        if(!parent) {
-            return;
-        }
-
-        const rect = parent?.getBoundingClientRect();
-
-        canvas.width = Math.floor(rect.width) * 2;
-        canvas.height = Math.floor(rect.height) * 2;
-    
-        const state = setup(ctx);
-
-        let animFrame: number;
-        
-        const drawWrap = () => {
-            draw(ctx, state);
-            animFrame = requestAnimationFrame(drawWrap)
-        }
-
-        animFrame = requestAnimationFrame(drawWrap);
-
-        return () => {
-            cancelAnimationFrame(animFrame)
-        }
-        
+import React, {FC} from "react";
+import { use2DCanvas } from "../use2DCanvas";
 
 
-    }, [isSlideActive])
-
-    return {
-        canvasRef
-    }
-}
 
 interface Actor {
     role: "🪨" | "📜" | "✂️"
     x: number;
     y: number;
+    velX: number,
+    velY: number,
 }
 
 interface State {
     actors: Actor[]
 }
+
+const bois = 300
 
 function setup(ctx: CanvasRenderingContext2D): State {
 
@@ -80,11 +28,13 @@ function setup(ctx: CanvasRenderingContext2D): State {
 
     const roles = ["🪨", "📜", "✂️"] satisfies Actor["role"][];
 
-    for (let i = 0; i < 300; i++) {
+    for (let i = 0; i < bois; i++) {
         actors.push({
             role: roles[Math.floor(Math.random()*roles.length)],
             x: (w-margin*2)*Math.random()+margin,
             y: (h-margin*2)*Math.random()+margin,
+            velX: 0,
+            velY: 0,
         })
     }
 
@@ -94,14 +44,34 @@ function setup(ctx: CanvasRenderingContext2D): State {
 }
 
 function hasCollision(a: Actor, b: Actor): boolean {
-
-
     if (
-        a.x < b.x + 32 &&
-        a.x + 32 > b.x &&
-        a.y < b.y + 32 &&
-        a.y + 32 > b.y
+        a.x <= b.x + 42 &&
+        a.x + 42 >= b.x &&
+        a.y <= b.y + 42 &&
+        a.y + 42 >= b.y
     ) {
+        if(a.role === b.role) {
+            const diffX = (b.x - a.x)/10.5;
+            const diffY = (b.y - a.y)/10.5
+            if(a.x > b.x) {
+                
+                a.x -= diffX*1.1;
+                b.x += diffX;
+            } else {
+                a.x += diffX;
+                b.x -= diffX*1.1;
+            }
+    
+            if(a.y > b.y) {
+                
+                a.y -= diffY*1.1;
+                b.y += diffY;
+            } else {
+                a.y += diffY;
+                b.y -= diffY*1.1;
+            }
+        }
+        
         return true;
     }
 
@@ -112,7 +82,7 @@ const distance = (a: Actor, b: Actor): number => {
     return Math.sqrt(Math.pow(b.x - a.x, 2) + Math.pow(b.y - a.y, 2))
 }
 
-function draw(ctx: CanvasRenderingContext2D, state: State) {
+function draw(ctx: CanvasRenderingContext2D, time: DOMHighResTimeStamp, state: State) {
     const w = ctx.canvas.width;
     const h = ctx.canvas.height;
 
@@ -120,7 +90,7 @@ function draw(ctx: CanvasRenderingContext2D, state: State) {
 
     ctx.clearRect(0, 0, w, h);
 
-    ctx.font = "bold 32px sans-serif";
+    ctx.font = "bold 48px sans-serif";
     ctx.strokeStyle = "red";
 
     const papers: Actor[] = [];
@@ -217,9 +187,9 @@ function draw(ctx: CanvasRenderingContext2D, state: State) {
 
     }
 
-    const rSpeedFactor = (300 - rocks.length) / 300;
-    const pSpeedFactor = (300 - papers.length) / 300;
-    const sSpeedFactor = (300 - scissors.length) / 300;
+    const rSpeedFactor = (bois - rocks.length) / bois;
+    const pSpeedFactor = (bois - papers.length) / bois;
+    const sSpeedFactor = (bois - scissors.length) / bois;
 
     for (let index = 0; index < pairs.length; index++) {
         const [actor, target] = pairs[index];
@@ -230,14 +200,17 @@ function draw(ctx: CanvasRenderingContext2D, state: State) {
             const vectorX = (target[0].x - actor.x) / target[1];
             const vectorY = (target[0].y - actor.y) / target[1];
     
-            actor.x += vectorX * Math.pow(speedFactor * 1.6, 2);
-            actor.y += vectorY * Math.pow(speedFactor * 1.6, 2);
+            actor.velX = vectorX * Math.pow(speedFactor * 1.2, 2) + actor.velX/1.3;
+            actor.velY = vectorY * Math.pow(speedFactor * 1.2, 2) + actor.velY/1.3;
+
+            actor.x += actor.velX;
+            actor.y += actor.velY;
     
-            ctx.strokeStyle = "red"
-            ctx.beginPath();
-            ctx.moveTo(actor.x, actor.y-34 - 13);
-            ctx.lineTo(target[0].x, target[0].y-34 - 13);
-            ctx.stroke();
+                // ctx.strokeStyle = "red"
+                // ctx.beginPath();
+                // ctx.moveTo(actor.x, actor.y-34 - 13);
+                // ctx.lineTo(target[0].x, target[0].y-34 - 13);
+                // ctx.stroke();
         }
         
     }
@@ -248,8 +221,8 @@ function draw(ctx: CanvasRenderingContext2D, state: State) {
 
         ctx.strokeStyle = "green"
 
-        ctx.strokeRect(actor.x-16, actor.y-34 - 29, 32, 32);
-        ctx.fillText(actor.role, actor.x-16, actor.y-34);
+        // ctx.strokeRect(actor.x-16, actor.y-34 - 29, 42, 42);
+        ctx.fillText(actor.role, actor.x-21, actor.y-25);
        
         
     }

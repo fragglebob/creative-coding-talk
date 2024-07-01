@@ -8,12 +8,13 @@ import { AudioGraphExample } from './src/WebAudioIntoSlide/AudioGraphExample';
 import { TB303 } from './src/TB303';
 import { DNB } from './src/DNB';
 import { RPS } from './src/RockPaperScissors';
+import { LinesExample } from './src/LinesExample';
 
 const theme: SpectacleThemeOverrides = {
   colors: {
     primary: "white",
     secondary: "hotpink",
-    tertiary: "#222",
+    tertiary: "black",
   },
   fonts: {
     header: '"JetBrains Mono", monospace',
@@ -47,13 +48,19 @@ const Presentation = () => (
     </Slide>
     <Slide>
       <FlexBox height="100%" flexDirection="column">
-        <Image height="100%" width="100%" src={inputOutput} style={{ objectFit: "contain", filter: "brightness(0.87) invert()" }}></Image>
+        <Image height="100%" width="100%" src={inputOutput} style={{ objectFit: "contain", filter: "invert()" }}></Image>
       </FlexBox>
       <p>Source: https://timrodenbroeker.de/what-is-creative-coding/</p>
     </Slide>
     <Slide>
       <Heading fontSize="h2">{"<canvas>"}</Heading>
       <Text>A cool element for drawing things on the screen, with support for 2D, via the Canvas API, and 3D, with WebGL.</Text>
+    </Slide>
+    <Slide>
+      <FlexBox height="100%" flexDirection="column">
+        <Heading fontSize="h2">Lines</Heading>
+        <LinesExample />
+      </FlexBox>
     </Slide>
     <Slide>
       <FlexBox height="100%" flexDirection="column">

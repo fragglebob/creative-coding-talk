@@ -299,7 +299,7 @@ export const TB303: FC = () => {
             </div>
         </div>
 
-        <div className="flex flex-row col-span-2">
+        <div className="flex flex-row col-span-2 bg-gray-600 p-4 rounded">
             <div className=" gap-1 flex flex-col pr-4">
                 {sceneState.pattern.labels.map((label, i) => {
                     return <div key={i}>{label}</div>
@@ -310,7 +310,7 @@ export const TB303: FC = () => {
                     {column.map(((note, j) => {
                         return <div
                             key={j}
-                            className={note ? "bg-white rounded w-6 h-6" : "bg-black rounded w-6 h-6"}
+                            className={note ? "bg-white rounded w-6 h-6" : "bg-gray-800 rounded w-6 h-6"}
                             onClick={() => {
                                 sceneState.pattern.toggle(i, j);
                             }}>
