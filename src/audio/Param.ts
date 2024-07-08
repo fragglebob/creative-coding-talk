@@ -4,6 +4,7 @@ interface ParamOptions {
     min: number;
     max: number;
     step?: number;
+    scale?: "log2" | "linear" 
 }
 
 export class Param {
@@ -19,6 +20,8 @@ export class Param {
 
     onChange: () => void;
 
+    scale: "log2" | "linear";
+
     constructor(options: ParamOptions, onChange: () => void) {
         this.value = options.default;
         this.normalized = this.normalizedFromValue(this.value);
@@ -26,6 +29,8 @@ export class Param {
         this.max = options.max;
 
         this.step = options.step ?? 1;
+
+        this.scale = options.scale ?? "linear";
 
         this.onChange = onChange;
     }
@@ -39,16 +44,25 @@ export class Param {
 
     setNormalized(normalized: number) {
         this.normalized = Math.max(Math.min(normalized, 1), 0);
-        this.value = this.valueFromNormalized(this.value);
+        this.value = this.valueFromNormalized(this.normalized);
         this.updateParam();
         this.onChange();
     }
 
     normalizedFromValue(value: number): number {
+
+        if(this.scale === "log2") {
+            return ((Math.log(value/this.max) / Math.LN2) / Math.log2(this.max / this.min) + 1) * 127
+        }
+
         return (value - this.min) / (this.max - this.min)
     }
 
     valueFromNormalized(normalized: number): number {
+        if(this.scale === "log2") {
+            return this.max * Math.pow(2, Math.log2(this.max / this.min) * (normalized - 1.0))
+        }
+
         return this.min + (normalized * (this.max - this.min))
     }
     connect(param: AudioParam) {
@@ -57,6 +71,9 @@ export class Param {
     }
 
     updateParam() {
+
+        console.log(this.normalized, this.value)
+
         if (!this.param) {
             return;
         }

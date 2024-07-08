@@ -5,6 +5,7 @@ import { BaseAudioScene } from "../audio/AudioScene";
 import { Param } from "../audio/Param";
 import { useClockedAudio } from "../audio/useClockedAudio";
 import { Pattern } from "../audio/Pattern";
+import { ButtonNames, MidiMix } from "../midi/MidiMix";
 
 class TB303Scene extends BaseAudioScene<{
     tempo: Param,
@@ -38,7 +39,7 @@ class TB303Scene extends BaseAudioScene<{
             tempo: new Param({
                 default: 120,
                 min: 60,
-                max: 300
+                max: 160
             }, this.emitChange),
             volume: new Param({
                 default: 0.8,
@@ -64,8 +65,9 @@ class TB303Scene extends BaseAudioScene<{
             }, this.emitChange),
             cutoff: new Param({
                 default: 1400,
-                min: 0,
-                max: 9000
+                min: 1,
+                max: 9000,
+                scale: "log2",
             }, this.emitChange),
             reso: new Param({
                 default: 10,
@@ -261,7 +263,34 @@ export const TB303: FC = () => {
 
     const { isPlaying, play, stop, display16thNote, sceneState } = useClockedAudio(tb303);
 
+    const handleButtonPress = ({ name }: { name: ButtonNames }) => {
+        if(name === "BANK_LEFT") {
+            play();
+        } else if(name === "BANK_RIGHT") {
+            stop();
+        }
+    }
+
+    const handleSliderChange = ({ name, value }: { name: string, value: number }) => {
+        if(name === "1") {
+            sceneState.tempo.setNormalized(value / 127);
+        } else if(name === "2") {
+            sceneState.volume.setNormalized(value / 127);
+        } else if(name === "3") {
+            sceneState.decay.setNormalized(value / 127);
+        } else if(name === "4") {
+            sceneState.cutoff.setNormalized(value / 127);
+        } else if(name === "5") {
+            sceneState.envmod.setNormalized(value / 127);
+        } else if(name === "6") {
+            sceneState.accent.setNormalized(value / 127);
+        } else if(name === "7") {
+            sceneState.reso.setNormalized(value / 127);
+        }
+    }
+
     return <div className="flex justify-center gap-12 font-mono">
+        <MidiMix onButtonPress={handleButtonPress} onSliderChange={handleSliderChange} />
         <div className="w-30">
 
             <div className="flex w-full gap-4 mb-10">
@@ -280,9 +309,9 @@ export const TB303: FC = () => {
             <div>
                 {(["tempo", "volume", "decay", "cutoff", "envmod", "accent", "reso"] as const).map((param) => {
                     const p = sceneState[param] as Param;
-                    return <div>
+                    return <div key={param}>
 
-                        <label className="block" htmlFor={param}>{param}: {p.value}</label>
+                        <label className="block" htmlFor={param}>{param}: {p.value.toFixed(4)}</label>
                         <input
                             id={param}
                             type="range"
