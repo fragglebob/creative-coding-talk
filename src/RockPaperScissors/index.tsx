@@ -12,7 +12,8 @@ interface Actor {
 }
 
 interface State {
-    actors: Actor[]
+    actors: Actor[];
+    resetTime?: number;
 }
 
 const bois = 300
@@ -39,7 +40,8 @@ function setup(ctx: CanvasRenderingContext2D): State {
     }
 
     return {
-        actors
+        actors,
+        finished: false,
     }
 }
 
@@ -83,6 +85,17 @@ const distance = (a: Actor, b: Actor): number => {
 }
 
 function draw(ctx: CanvasRenderingContext2D, time: DOMHighResTimeStamp, state: State) {
+
+
+    if(typeof state.resetTime !== "undefined") {
+        console.log(state.resetTime);
+        if(state.resetTime < time) {
+            state.resetTime = undefined;
+            const newState = setup(ctx);
+            state.actors = newState.actors;
+        }
+    }
+
     const w = ctx.canvas.width;
     const h = ctx.canvas.height;
 
@@ -134,10 +147,13 @@ function draw(ctx: CanvasRenderingContext2D, time: DOMHighResTimeStamp, state: S
         }
     }
 
-    if(rocks.length  === 0|| papers.length  === 0|| scissors.length === 0) {
-        const newState = setup(ctx);
-        state.actors = newState.actors;
+    if(typeof state.resetTime === "undefined") {
+        if(rocks.length  === 0|| papers.length  === 0|| scissors.length === 0) {
+            state.resetTime = time + 3_000;
+    
+        }
     }
+    
 
     const pairs: [Actor, [Actor, number] | undefined][] = [];
 
