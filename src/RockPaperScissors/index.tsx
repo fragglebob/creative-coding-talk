@@ -88,7 +88,6 @@ function draw(ctx: CanvasRenderingContext2D, time: DOMHighResTimeStamp, state: S
 
 
     if(typeof state.resetTime !== "undefined") {
-        console.log(state.resetTime);
         if(state.resetTime < time) {
             state.resetTime = undefined;
             const newState = setup(ctx);
