@@ -40,8 +40,7 @@ function setup(ctx: CanvasRenderingContext2D): State {
     }
 
     return {
-        actors,
-        finished: false,
+        actors
     }
 }
 

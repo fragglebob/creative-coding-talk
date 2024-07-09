@@ -35,17 +35,17 @@ const Presentation = () => (
       </Slide>
       <Slide>
         <FlexBox height="100%" flexDirection="column">
-          <Heading fontSize="h2">Hi, I'm Rob</Heading>
-          <Text fontSize="2em">I make web things, and work places</Text>
+          <Heading fontSize="h2">Hi, I'm Rob Wells</Heading>
+          <Text fontSize="2em">I make websites, and work places</Text>
         </FlexBox>
       </Slide>
       <Slide>
-        <Heading fontSize="h2">Creative Coding</Heading>
+        <Heading fontSize="h2">So, What is Creative Coding?</Heading>
         <Text>
           Creativity might not be the first word comes to mind when you think about programming.
         </Text>
         <Text>
-          It sits in an intersection where technology, art and design come together. It's programming with the goal of creating something expressive.
+          It exists where technology, art and design come together. It's programming with the goal of creating something expressive.
         </Text>
       </Slide>
       <Slide>
