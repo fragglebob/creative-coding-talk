@@ -2,6 +2,7 @@ import React, { FC, ReactNode, createContext, useContext, useEffect, useState } 
 
 interface WebMidiCtx {
     subscribe: (handler: (event: MIDIMessageEvent) => void) => (() => void)
+    send: (portSelector: { name: string, manufacturer?: string }, data: number[]) => void;
 }
 
 const ctx = createContext<WebMidiCtx | undefined>(undefined)
@@ -11,6 +12,8 @@ type MessageHandler = (event: MIDIMessageEvent) => void;
 class WebMidiManager implements WebMidiCtx {
 
     subs: Set<MessageHandler>
+
+    outputs: MIDIOutput[] = [];
 
     constructor() {
         this.subs = new Set();
@@ -29,9 +32,14 @@ class WebMidiManager implements WebMidiCtx {
                     this.forwardMessage(event);
                 })
             })
-            
         })
-
+        
+        midiAccess.outputs.forEach(output => {
+            output.open().then(() =>
+            {
+                this.outputs.push(output);
+            })
+        })
     }
 
     forwardMessage(event: MIDIMessageEvent) {
@@ -46,6 +54,18 @@ class WebMidiManager implements WebMidiCtx {
         return () => {
             this.subs.delete(handler);
         }
+    }
+
+    send(portSelector: { name: string, manufacturer?: string }, data: number[]) {
+        this.outputs.forEach(output => {
+            if(output.name !== portSelector.name) {
+                return;
+            }
+            if(portSelector.manufacturer && portSelector.manufacturer !== output.manufacturer) {
+                return;
+            }
+            output.send(data);
+        })
     }
 }
 

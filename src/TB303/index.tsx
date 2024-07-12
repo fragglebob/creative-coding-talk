@@ -329,9 +329,9 @@ export const TB303: FC = () => {
         </div>
 
         <div className="flex flex-row col-span-2 bg-gray-600 p-4 rounded">
-            <div className=" gap-1 flex flex-col pr-4">
+            <div className=" gap-1 flex flex-col p-1 pr-4">
                 {sceneState.pattern.labels.map((label, i) => {
-                    return <div key={i}>{label}</div>
+                    return <div key={i} className="h-6 text-right leading-6">{label}</div>
                 })}
             </div>
             {sceneState.pattern.grid.map(((column, i) => {
