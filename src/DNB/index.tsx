@@ -4,7 +4,7 @@ import { AudioScene, BaseAudioScene } from "../audio/AudioScene";
 import { Pattern } from "../audio/Pattern";
 import cx from "classnames"
 
-import drumLoop from "./drum-loop.mp3";
+import drumLoop from "./drum-loop-2.mp3";
 import { Buttons, Launchpad } from "../midi/Launchpad";
 
 class DNBScene extends BaseAudioScene<{ pattern: Pattern<"1" | "2" | "3" | "4" | "5" | "6" | "7" | "8"> }> {
@@ -59,7 +59,7 @@ class DNBScene extends BaseAudioScene<{ pattern: Pattern<"1" | "2" | "3" | "4" |
             return;
         }
 
-        const secondsPerBeat = 60 / 180;
+        const secondsPerBeat = 60 / 170;
 
         const offsets = this.state.pattern.getRow(current16th % 8);
 

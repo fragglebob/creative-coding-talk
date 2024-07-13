@@ -10,6 +10,7 @@ import { DNB } from './src/DNB';
 import { RPS } from './src/RockPaperScissors';
 import { LinesExample } from './src/LinesExample';
 import { WebMidiProvider } from './src/midi/useMidi';
+import { Pong } from './src/Pong';
 
 const theme: SpectacleThemeOverrides = {
   colors: {
@@ -52,7 +53,7 @@ const Presentation = () => (
         <FlexBox height="100%" flexDirection="column">
           <Image height="100%" width="100%" src={inputOutput} style={{ objectFit: "contain", filter: "invert()" }}></Image>
         </FlexBox>
-        <p>Source: https://timrodenbroeker.de/what-is-creative-coding/</p>
+        <p className='text-neutral-500'>Source: https://timrodenbroeker.de/what-is-creative-coding/</p>
       </Slide>
       <Slide>
         <Heading fontSize="h2">{"<canvas>"}</Heading>
@@ -82,8 +83,20 @@ const Presentation = () => (
         <TB303 />
       </Slide>
       <Slide>
+        <Heading fontSize="h2">Web MIDI API</Heading>
+        <Text>
+          An API for connecting to, and interacting with MIDI devives.
+        </Text>
+        <Pong />
+      </Slide>
+      <Slide>
+        <Heading fontSize="h2">TB303</Heading>
+        <TB303 />
+      </Slide>
+      <Slide>
         <Heading fontSize="h2">Slices</Heading>
         <DNB />
+        <p className='mt-10 text-neutral-500'>Source: https://samplefocus.com/samples/fast-amen-breakcore-stutter</p>
       </Slide>
     </Deck>
   </WebMidiProvider>

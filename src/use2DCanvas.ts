@@ -3,7 +3,7 @@ import { useSlide } from "./useSlide";
 
 export function use2DCanvas<TState>(setup: (ctx: CanvasRenderingContext2D) => TState, draw: (ctx: CanvasRenderingContext2D, time: DOMHighResTimeStamp, state: TState) => void) {
     const canvasRef = useRef<HTMLCanvasElement>(null);
-
+    const stateRef = useRef<TState>();
     const { isSlideActive } = useSlide();
 
     useEffect(() => {
@@ -35,6 +35,8 @@ export function use2DCanvas<TState>(setup: (ctx: CanvasRenderingContext2D) => TS
     
         const state = setup(ctx);
 
+        stateRef.current = state;
+
         let animFrame: number;
         
         const drawWrap = (time: DOMHighResTimeStamp) => {
@@ -53,6 +55,7 @@ export function use2DCanvas<TState>(setup: (ctx: CanvasRenderingContext2D) => TS
     }, [isSlideActive])
 
     return {
-        canvasRef
+        canvasRef,
+        state: stateRef,
     }
 }
