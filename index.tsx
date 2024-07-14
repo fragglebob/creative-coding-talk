@@ -11,6 +11,7 @@ import { RPS } from './src/RockPaperScissors';
 import { LinesExample } from './src/LinesExample';
 import { WebMidiProvider } from './src/midi/useMidi';
 import { Pong } from './src/Pong';
+import { GLSLDemo } from './src/GLSL';
 
 const theme: SpectacleThemeOverrides = {
   colors: {
@@ -68,6 +69,12 @@ const Presentation = () => (
           <Heading fontSize="h2">Rock, Paper, Scissors</Heading>
           <RPS />
         </FlexBox>
+      </Slide>
+      <Slide>
+        <FlexBox height="100%" flexDirection="column">
+          <Heading fontSize="h3">SDF Shader Fun</Heading>
+          <GLSLDemo />
+          </FlexBox>
       </Slide>
       <Slide>
         <Heading fontSize="h2">Web Audio API</Heading>
