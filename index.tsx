@@ -37,17 +37,15 @@ const Presentation = () => (
       <Slide>
         <FlexBox height="100%" flexDirection="column">
           <Heading fontSize="h2">Hi, I'm Rob Wells</Heading>
-          <Text fontSize="2em">I make websites, and work places</Text>
+          <Text fontSize="2em">I make websites, and I work places</Text>
         </FlexBox>
       </Slide>
       <Slide>
         <Heading fontSize="h2">So, What is Creative Coding?</Heading>
-        <Text>
-          Creativity might not be the first word comes to mind when you think about programming.
+        <Text fontSize="2.5em">
+          Creativity might not be the first word comes to mind when you think about programming, but we can use code to create all sorts of expressive peices for work. 
         </Text>
-        <Text>
-          It exists where technology, art and design come together. It's programming with the goal of creating something expressive.
-        </Text>
+        <Text fontSize="2.5em">It's mixing art, design, and <em>technology</em> together.</Text>
       </Slide>
       <Slide>
         <FlexBox height="100%" flexDirection="column">
@@ -56,8 +54,8 @@ const Presentation = () => (
         <p className='text-neutral-500'>Source: https://timrodenbroeker.de/what-is-creative-coding/</p>
       </Slide>
       <Slide>
-        <Heading fontSize="h2">{"<canvas>"}</Heading>
-        <Text>A cool element for drawing things on the screen, with support for 2D, via the Canvas API, and 3D, with WebGL.</Text>
+        <Heading fontSize="h2">The {"<canvas>"} element</Heading>
+        <Text>A great element for drawing graphics on the screen, with support for 2D, via the Canvas API, and 3D, with WebGL.</Text>
       </Slide>
       <Slide>
         <FlexBox height="100%" flexDirection="column">
@@ -85,7 +83,7 @@ const Presentation = () => (
       <Slide>
         <Heading fontSize="h2">Web MIDI API</Heading>
         <Text>
-          An API for connecting to, and interacting with MIDI devives.
+          An API for talking with MIDI devives. 
         </Text>
         <Pong />
       </Slide>

@@ -50,9 +50,9 @@ function draw(ctx: CanvasRenderingContext2D, time: DOMHighResTimeStamp, state: S
     const target = state.ball.y;
     const current = state.rightPlayer;
     const maxSpeed = 5;
-    const diff = target - current;
+    const diff = target - current
 
-    state.rightPlayer = Math.max(50, Math.min(h-50, current + Math.max(maxSpeed*-1, Math.min(maxSpeed, diff))))
+    state.rightPlayer = Math.max(50, Math.min(h-50, current + Math.max(maxSpeed*-1, Math.min(maxSpeed, diff*0.1))))
 
     state.ball.velX *= 1.0005
     state.ball.velY *= 1.0005
