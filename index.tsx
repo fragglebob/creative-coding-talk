@@ -12,6 +12,7 @@ import { LinesExample } from './src/LinesExample';
 import { WebMidiProvider } from './src/midi/useMidi';
 import { Pong } from './src/Pong';
 import { GLSLDemo } from './src/GLSL';
+import { Pizza } from './src/Pizza';
 
 const theme: SpectacleThemeOverrides = {
   colors: {
@@ -74,7 +75,7 @@ const Presentation = () => (
         <FlexBox height="100%" flexDirection="column">
           <Heading fontSize="h3">SDF Shader Fun</Heading>
           <GLSLDemo />
-          </FlexBox>
+        </FlexBox>
       </Slide>
       <Slide>
         <Heading fontSize="h2">Web Audio API</Heading>
@@ -102,6 +103,30 @@ const Presentation = () => (
         <Heading fontSize="h2">Slices</Heading>
         <DNB />
         <p className='mt-10 text-neutral-500'>Source: https://samplefocus.com/samples/fast-amen-breakcore-stutter</p>
+      </Slide>
+      <Slide>
+          <Heading fontSize="h2">Other coooool Web APIs</Heading>
+          <Text>
+            <ul className='ml-4'>
+              <li className="list-disc">CSS Painting API</li>
+              <li className="list-disc">Web Serial API</li>
+              <li className="list-disc">WebUSB API</li>
+              <li className="list-disc">WebGPU API</li>
+              <li className="list-disc">Gamepad API</li>
+            </ul>
+          </Text>
+      </Slide>
+      <Slide>
+          <Heading fontSize="h2">Let's warp this up.</Heading>
+          <Text>
+            Programming can be creative.
+          </Text>
+          <Text>
+            For me, I enjoy using my web powers, for building something different. 
+          </Text>
+      </Slide>
+      <Slide>
+        <Pizza />
       </Slide>
     </Deck>
   </WebMidiProvider>
