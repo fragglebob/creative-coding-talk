@@ -45,7 +45,7 @@ const Presentation = () => (
       <Slide>
         <Heading fontSize="h2">So, What is Creative Coding?</Heading>
         <Text fontSize="2.5em">
-          Creativity might not be the first word comes to mind when you think about programming, but we can use code to create all sorts of expressive peices for work. 
+          Creativity might not be the first word comes to mind when you think about programming, but we can use code to create all sorts of expressive pieces of work. 
         </Text>
         <Text fontSize="2.5em">It's mixing art, design, and <em>technology</em> together.</Text>
       </Slide>
@@ -117,7 +117,7 @@ const Presentation = () => (
           </Text>
       </Slide>
       <Slide>
-          <Heading fontSize="h2">Let's warp this up.</Heading>
+          <Heading fontSize="h2">Let's wrap this up.</Heading>
           <Text>
             Programming can be creative.
           </Text>
